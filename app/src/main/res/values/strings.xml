@@ -1,6 +1,6 @@
 <resources>
-
-        <string-array name="options_array">
+    <string name="selected_item">Selected item:</string>
+    <string-array name="options_array">
             <item>Day</item>
             <item>Week</item>
             <item>All</item>

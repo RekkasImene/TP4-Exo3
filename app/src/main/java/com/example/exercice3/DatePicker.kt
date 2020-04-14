@@ -9,9 +9,11 @@ import android.widget.DatePicker
 import android.widget.Toast
 import java.text.DateFormat
 import java.util.Calendar
+import android.widget.EditText
+import kotlinx.android.synthetic.main.activity_main.*
 
 
-class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener {
+open class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener {
     private lateinit var calendar:Calendar
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -23,9 +25,8 @@ class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener 
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
         // Create a new instance of DatePickerDialog and return it
-        return DatePickerDialog(activity, this, year, month, day)
-    }
-
+        return DatePickerDialog(activity, this,  year, month, day)
+}
     override fun onDateSet(view: DatePicker, year: Int, month: Int, day: Int) {
         // Do something with the date chosen by the user
         Toast.makeText(
@@ -35,8 +36,16 @@ class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener 
         ).show()
 
         // Display the selected date in text view
-        activity.findViewById<TextView>(R.id.text_view).text = formatDate(year,month,day)
+        activity.findViewById<TextView>(R.id.newTaskDate).text = formatDate(year,month,day)
+        //add task to list
+        var c= Calendar.getInstance()
+        c.set(Calendar.MONTH, month)
+        c.set(Calendar.DAY_OF_MONTH, day)
+        c.set(Calendar.YEAR,year)
+        (activity as MainActivity).Tasks.add(Task(activity.findViewById<EditText>(R.id.newTaskContent).text.toString(),c,false))
+        (activity as MainActivity).my_recycler_view.adapter=MyAdapter((activity as MainActivity).Tasks, activity)
     }
+
     // Custom method to format date
     private fun formatDate(year:Int, month:Int, day:Int):String{
         // Create a Date variable/object with user chosen date

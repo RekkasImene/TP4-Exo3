@@ -4,10 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.my_text_view.view.*
-import kotlinx.android.synthetic.main.text_view.view.*
 import java.text.DateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -30,15 +28,17 @@ class MyAdapter(val items: ArrayList<Task>, val context: Context) : RecyclerView
         val year = this.items[position].date.get(Calendar.YEAR)
         val month = this.items[position].date.get(Calendar.MONTH)
         val day = this.items[position].date.get(Calendar.DAY_OF_MONTH)
-        holder?.content?.text = this.items[position].content
-        holder?.date?.text= formatDate(year,month,day)
-        holder?.content.setOnClickListener(){
+        holder.content?.text = this.items[position].content
+        holder.date?.text= formatDate(year,month,day)
+        holder.content.setOnClickListener(){
             this.items.remove(this.items[position])
             notifyDataSetChanged()
         }
-        holder?.date.setOnClickListener(){
+        holder.date.setOnClickListener(){
+            this.items[position].done=true
             this.items.remove(this.items[position])
-            notifyDataSetChanged()
+
+
         }
 
 
